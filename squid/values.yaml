@@ -12,6 +12,8 @@ image:
 
 service:
   type: ClusterIP
+  # Specify cluster IP if needed
+  #clusterIP: "" 
   #  Specify IP to whitelist if needed
   #loadBalancerSourceRanges: ""
   # Specify external IP if needed
