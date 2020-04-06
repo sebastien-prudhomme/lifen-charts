@@ -15,11 +15,13 @@ metadata:
 spec:
 {{- if .Values.manager.ingress.tls }}
   tls:
-  - hosts:
-    - {{ .Values.manager.ingress.host }}
-{{- if .Values.manager.ingress.secretName }}
-    secretName: {{ .Values.manager.ingress.secretName }}
-{{- end }}
+  {{- range .Values.manager.ingress.tls }}
+    - hosts:
+      {{- range .hosts  }}
+        - {{ . | quote }}
+      {{- end }}
+      secretName: {{ .secretName }}
+  {{- end }}
 {{- end }}
   rules:
   - host: {{ .Values.manager.ingress.host }}
@@ -52,6 +54,6 @@ spec:
       paths:
       - path: {{ .Values.controller.ingress.path }}
         backend:
-          serviceName: neuvector-svc-controller
+          serviceName: neuvector-svc-controller-api
           servicePort: 10443
 {{- end }}
